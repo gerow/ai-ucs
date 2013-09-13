@@ -21,7 +21,8 @@ Game::Game(Game &g) :
   memcpy(_players, g._players, sizeof _players);
 }
 
-void Game::move(Game::Move m)
+void
+Game::move(Game::Move m)
 {
   move_player(0, m);
   if (m == Game::RIGHT) {
@@ -35,7 +36,8 @@ void Game::move(Game::Move m)
   }
 }
 
-int Game::move_cost(Game::Move m)
+int
+Game::move_cost(Game::Move m)
 {
   int costs[4] = {
     5, /* RIGHT */
@@ -47,13 +49,46 @@ int Game::move_cost(Game::Move m)
   return costs[m];
 }
 
-bool Game::is_game_won()
+bool
+Game::is_game_won()
 {
   return _players[0][0] == _players[1][0] &&
          _players[0][1] == _players[1][1];
 }
 
-void Game::move_player(int player, Game::Move m)
+int
+Game::w()
+{
+  return _w;
+}
+
+int Game::h()
+{
+  return _h;
+}
+
+int Game::x1()
+{
+  return _players[0][0];
+}
+
+int Game::y1()
+{
+  return _players[0][1];
+}
+
+int Game::x2()
+{
+  return _players[1][0];
+}
+
+int Game::y2()
+{
+  return _players[1][1];
+}
+
+void
+Game::move_player(int player, Game::Move m)
 {
   if (m == Game::RIGHT && _players[player][0] < _w) {
     _players[player][0]++;
