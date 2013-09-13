@@ -12,4 +12,4 @@ clean:
 	rm -r bin
 
 test: .cmake
-	@cd bin && make test
+	bin/src/test/test_all
