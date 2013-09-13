@@ -1,13 +1,24 @@
 #include <game.h>
 
+#include <string.h>
+
 Game::Game(int w, int h, int x1, int y1, int x2, int y2) :
   _w(w),
   _h(h)
 {
+  memset(_players, 0, sizeof _players);
+
   _players[0][0] = x1;
   _players[0][1] = y1;
   _players[1][0] = x2;
   _players[1][1] = y2;
+}
+
+Game::Game(Game &g) :
+  _w(g._w),
+  _h(g._h)
+{
+  memcpy(_players, g._players, sizeof _players);
 }
 
 void Game::move(Game::Move m)
@@ -34,6 +45,12 @@ int Game::move_cost(Game::Move m)
   };
 
   return costs[m];
+}
+
+bool Game::is_game_won()
+{
+  return _players[0][0] == _players[1][0] &&
+         _players[0][1] == _players[1][1];
 }
 
 void Game::move_player(int player, Game::Move m)

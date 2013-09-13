@@ -4,9 +4,11 @@
 class Game {
   public:
   	Game(int w, int h, int x1, int y1, int x2, int y2);
+    Game(Game &g);
     enum Move { RIGHT, LEFT, DOWN, UP };
     void move(Move m);
     int move_cost(Move m);
+    bool is_game_won();
   private:
     int _w, _h;
     int _players[2][2];
