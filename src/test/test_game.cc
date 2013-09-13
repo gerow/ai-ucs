@@ -91,3 +91,12 @@ TEST(GameTest, TestMovesLeftProperlyAtWall) {
   g.move(Game::LEFT);
   ASSERT_EQ(1, g.x1());
 }
+
+TEST(GameTest, TestMoveCostIsCorrect) {
+  Game g(5, 5, 1, 1, 3, 4);
+
+  ASSERT_EQ(3, g.move_cost(Game::UP));
+  ASSERT_EQ(5, g.move_cost(Game::RIGHT));
+  ASSERT_EQ(6, g.move_cost(Game::DOWN));
+  ASSERT_EQ(4, g.move_cost(Game::LEFT));
+}
