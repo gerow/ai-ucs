@@ -1,3 +1,5 @@
+add_subdirectory (test)
+
 add_library (Game game.cc)
 
 include_directories(include)
