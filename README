@@ -1,0 +1,9 @@
+Build Instructions:
+Make sure you are using bash when you build, otherwise the script that adds the necessary binaries to the path will fail.  You can do with just by typing 'bash' in the terminal.
+
+Once in bash, you need to source setup.sh, which should be as easy as running 'source ./setup.sh' from within the project directory.
+
+After that, all you need to do is run 'make' to build the program, and then run './build/src/main' to run it.
+
+It will be looking in the current working directory (pwd) for the input file and will be writing the output file to the current working directory.  Because of this it may be easier to move this executable to a different place while running it.
+
