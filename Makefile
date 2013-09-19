@@ -1,15 +1,15 @@
 all: .cmake
 
-bin:
-	@echo creating bin directory
-	mkdir bin
+build:
+	@echo creating build directory
+	mkdir build
 
-.cmake: bin
-	@cd bin && cmake .. && make
+.cmake: build
+	@cd build && cmake .. && make
 
 clean:
-	@echo removing bin directory
-	rm -r bin
+	@echo removing build directory
+	rm -r build
 
 test: .cmake
-	bin/src/test/test_all
+	build/src/test/test_all
