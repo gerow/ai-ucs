@@ -13,3 +13,6 @@ clean:
 
 test: .cmake
 	build/src/test/test_all
+
+check: test
+
