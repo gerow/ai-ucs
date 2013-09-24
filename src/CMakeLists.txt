@@ -1,4 +1,10 @@
 find_package(Boost)
+
+if(${Boost_INCLUDE_DIR} EQUAL NOTFOUND)
+  set(Boost_INCLUDE_DIR "/auto/usc/boost/default/include")
+  set(Boost_LIBRARIES "/auto/usc/boost/default/lib")
+endif(${Boost_INCLUDE_DIR} EQUAL NOTFOUND)
+
 include_directories(${Boost_INCLUDE_DIR})
 
 add_library(Game game.cc)
