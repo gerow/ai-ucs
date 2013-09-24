@@ -1,13 +1,21 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#include <string>
+#include <boost/shared_ptr.hpp>
+
 class Game {
   public:
+    Game();
+
   	Game(int w, int h, int x1, int y1, int x2, int y2);
 
     Game(Game &g);
 
     enum Move { RIGHT, LEFT, DOWN, UP };
+
+    static boost::shared_ptr<Game>
+    load(std::string filename);
 
     void
     move(Move m);

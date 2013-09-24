@@ -100,3 +100,16 @@ TEST(GameTest, TestMoveCostIsCorrect) {
   ASSERT_EQ(6, g.move_cost(Game::DOWN));
   ASSERT_EQ(4, g.move_cost(Game::LEFT));
 }
+
+TEST(GameTest, TestLoadFromFile) {
+  boost::shared_ptr<Game> g = Game::load("src/test/files/test_input.txt");
+
+  ASSERT_EQ(7, g.get()->w());
+  ASSERT_EQ(7, g.get()->h());
+
+  ASSERT_EQ(1, g.get()->x1());
+  ASSERT_EQ(5, g.get()->y1());
+
+  ASSERT_EQ(3, g.get()->x2());
+  ASSERT_EQ(7, g.get()->y2());
+}

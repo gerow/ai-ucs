@@ -1,6 +1,15 @@
 #include <ai-ucs/game.h>
 
 #include <string.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+
+Game::Game()
+{
+  _w = _h = 0;
+  memset(_players, 0, sizeof _players);
+}
 
 Game::Game(int w, int h, int x1, int y1, int x2, int y2) :
   _w(w),
@@ -19,6 +28,25 @@ Game::Game(Game &g) :
   _h(g._h)
 {
   memcpy(_players, g._players, sizeof _players);
+}
+
+boost::shared_ptr<Game>
+Game::load(std::string filename)
+{
+  int size, x1, y1, x2, y2;
+  std::ifstream f;
+  f.open(filename.c_str());
+
+  f >> size;
+  f >> x1;
+  f >> y1;
+  f >> x2;
+  f >> y2;
+
+  f.close();
+
+  boost::shared_ptr<Game> g(new Game(size, size, x1, y1, x2, y2));
+  return g;
 }
 
 void
@@ -62,27 +90,32 @@ Game::w()
   return _w;
 }
 
-int Game::h()
+int
+Game::h()
 {
   return _h;
 }
 
-int Game::x1()
+int
+Game::x1()
 {
   return _players[0][0];
 }
 
-int Game::y1()
+int
+Game::y1()
 {
   return _players[0][1];
 }
 
-int Game::x2()
+int
+Game::x2()
 {
   return _players[1][0];
 }
 
-int Game::y2()
+int
+Game::y2()
 {
   return _players[1][1];
 }
