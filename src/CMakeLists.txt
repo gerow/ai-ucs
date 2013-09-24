@@ -1,9 +1,9 @@
 find_package(Boost)
 
-if(${Boost_INCLUDE_DIR} EQUAL NOTFOUND)
-  set(Boost_INCLUDE_DIR "/auto/usc/boost/default/include")
+if(NOT Boost_INCLUDE_DIR)
+  set(Boost_INCLUDE_DIR "/auto/usc/boost/default/include/boost-1_32")
   set(Boost_LIBRARIES "/auto/usc/boost/default/lib")
-endif(${Boost_INCLUDE_DIR} EQUAL NOTFOUND)
+endif(NOT Boost_INCLUDE_DIR)
 
 include_directories(${Boost_INCLUDE_DIR})
 
