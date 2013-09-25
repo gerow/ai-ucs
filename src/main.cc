@@ -1,6 +1,7 @@
 #include "ai-ucs/game.h"
 
 #include <boost/shared_ptr.hpp>
+#include <queue>
 
 int
 main(int argc, char** argv)

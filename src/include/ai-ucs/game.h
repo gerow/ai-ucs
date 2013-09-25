@@ -2,6 +2,8 @@
 #define _GAME_H
 
 #include <string>
+#include <vector>
+
 #include <boost/shared_ptr.hpp>
 
 class Game {
@@ -43,13 +45,30 @@ class Game {
 
     int
     y2();
+
+    std::vector<boost::shared_ptr<int[2][2]> >
+    history();
+
+    int
+    cost();
   private:
     int _w, _h;
 
     int _players[2][2];
 
+    std::vector<boost::shared_ptr<int[2][2]> >
+    _history;
+
+    int _cost;
+
     void
     move_player(int player, Move m);
+
+    void
+    save_to_history();
+
+    bool
+    state_in_history(int x1, int y1, int x2, int y2);
 };
 
 #endif /* _GAME_H */

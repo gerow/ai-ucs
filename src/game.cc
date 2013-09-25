@@ -13,7 +13,8 @@ Game::Game()
 
 Game::Game(int w, int h, int x1, int y1, int x2, int y2) :
   _w(w),
-  _h(h)
+  _h(h),
+  _cost(0)
 {
   memset(_players, 0, sizeof _players);
 
@@ -25,7 +26,9 @@ Game::Game(int w, int h, int x1, int y1, int x2, int y2) :
 
 Game::Game(Game &g) :
   _w(g._w),
-  _h(g._h)
+  _h(g._h),
+  _cost(g._cost),
+  _history(g._history)
 {
   memcpy(_players, g._players, sizeof _players);
 }
@@ -52,6 +55,9 @@ Game::load(std::string filename)
 void
 Game::move(Game::Move m)
 {
+  // first, throw the current position into
+  // the history vector
+  save_to_history();
   move_player(0, m);
   if (m == Game::RIGHT) {
     move_player(1, Game::DOWN);
@@ -132,4 +138,27 @@ Game::move_player(int player, Game::Move m)
   } else if (m == Game::UP && _players[player][1] > 1) {
     _players[player][1]--;
   }
+}
+
+void
+Game::save_to_history()
+{
+  boost::shared_ptr<int[2][2]> old_players = boost::shared_ptr<int[2][2]>(new int[2][2]);
+  memcpy(old_players.get(), _players, sizeof _players);
+  _history.push_back(old_players);
+}
+
+bool
+Game::state_in_history(int x1, int y1, int x2, int y2)
+{
+  for (int i = 0; i < _history.size(); i++) {
+    if (_history[i][0][0] == x1 &&
+        _history[i][0][1] == y1 &&
+        _history[i][1][0] == x2 &&
+        _history[i][1][1] == y2) {
+      return true;
+    }
+  }
+
+  return false;
 }
