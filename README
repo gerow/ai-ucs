@@ -1,3 +1,7 @@
+Michael Gerow
+6804481189
+gerow@usc.edu
+
 Build Instructions:
 Make sure you are using bash when you build, otherwise the script that adds the necessary binaries to the path will fail.  You can do with just by typing 'bash' in the terminal.
 
