@@ -131,3 +131,15 @@ TEST(GameTest, TestKeepsHistory) {
   ASSERT_EQ(3, h[1][0]);
   ASSERT_EQ(4, h[1][1]);
 }
+
+TEST(GameTest, TestKeepsCost) {
+  Game g(5, 5, 1, 2, 3, 4);
+
+  g.move(Game::UP);
+  ASSERT_EQ(1, g.x1());
+  ASSERT_EQ(1, g.y1());
+  ASSERT_EQ(4, g.x2());
+  ASSERT_EQ(4, g.y2());
+
+  ASSERT_EQ(3, g.cost());
+}

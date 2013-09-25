@@ -134,6 +134,12 @@ Game::history()
   return _history;
 }
 
+int
+Game::cost()
+{
+  return _cost;
+}
+
 void
 Game::move_player(int player, Game::Move m)
 {
