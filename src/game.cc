@@ -128,6 +128,12 @@ Game::y2()
   return _players[1][1];
 }
 
+std::vector<boost::shared_ptr<int[2][2]> >
+Game::history()
+{
+  return _history;
+}
+
 void
 Game::move_player(int player, Game::Move m)
 {

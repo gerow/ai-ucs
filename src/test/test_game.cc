@@ -113,3 +113,21 @@ TEST(GameTest, TestLoadFromFile) {
   ASSERT_EQ(3, g.get()->x2());
   ASSERT_EQ(7, g.get()->y2());
 }
+
+TEST(GameTest, TestKeepsHistory) {
+  Game g(5, 5, 1, 2, 3, 4);
+
+  g.move(Game::UP);
+  ASSERT_EQ(1, g.x1());
+  ASSERT_EQ(1, g.y1());
+  ASSERT_EQ(4, g.x2());
+  ASSERT_EQ(4, g.y2());
+
+  int (*h)[2];
+  h = g.history()[0].get();
+
+  ASSERT_EQ(1, h[0][0]);
+  ASSERT_EQ(2, h[0][1]);
+  ASSERT_EQ(3, h[1][0]);
+  ASSERT_EQ(4, h[1][1]);
+}
