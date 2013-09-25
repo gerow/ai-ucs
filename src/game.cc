@@ -68,6 +68,8 @@ Game::move(Game::Move m)
   } else if (m == Game::UP) {
     move_player(1, Game::RIGHT);
   }
+
+  _cost += move_cost(m);
 }
 
 int
