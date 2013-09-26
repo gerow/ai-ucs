@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <queue>
 
 #include <boost/shared_ptr.hpp>
 
@@ -70,6 +71,16 @@ class Game {
     bool
     state_in_history(int x1, int y1, int x2, int y2);
 };
+
+class GameComparison {
+  bool _reverse;
+public:
+  GameComparison(const bool& revparam=false);
+
+  bool operator()(const Game &lhs, const Game &rhs) const;
+};
+
+typedef std::priority_queue<Game, std::vector<Game>, GameComparison> game_priority_queue;
 
 #endif /* _GAME_H */
 
