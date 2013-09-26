@@ -5,10 +5,16 @@
 #include <iostream>
 #include <fstream>
 
-Game::Game()
+Game::Game() :
+  _w(0),
+  _h(0),
+  _cost(0)
 {
-  _w = _h = 0;
-  memset(_players, 0, sizeof _players);
+  _players[0] = player_vector(2);
+  _players[1] = player_vector(2);
+
+  _history[0] = std::vector<boost::shared_ptr<player_vector> >();
+  _history[1] = std::vector<boost::shared_ptr<player_vector> >();
 }
 
 Game::Game(int w, int h, int x1, int y1, int x2, int y2) :
@@ -16,21 +22,27 @@ Game::Game(int w, int h, int x1, int y1, int x2, int y2) :
   _h(h),
   _cost(0)
 {
-  memset(_players, 0, sizeof _players);
+  _players[0] = player_vector(2);
+  _players[1] = player_vector(2);
 
-  _players[0][0] = x1;
-  _players[0][1] = y1;
-  _players[1][0] = x2;
-  _players[1][1] = y2;
+  _history[0] = std::vector<boost::shared_ptr<player_vector> >();
+  _history[1] = std::vector<boost::shared_ptr<player_vector> >();
+
+  _players[0](0) = x1;
+  _players[0](1) = y1;
+  _players[1](0) = x2;
+  _players[1](1) = y2;
 }
 
 Game::Game(Game &g) :
   _w(g._w),
   _h(g._h),
-  _cost(g._cost),
-  _history(g._history)
+  _cost(g._cost)
 {
-  memcpy(_players, g._players, sizeof _players);
+  _players[0] = g._players[0];
+  _players[1] = g._players[1];
+  _history[0] = g._history[0];
+  _history[1] = g._history[1];
 }
 
 boost::shared_ptr<Game>
@@ -88,8 +100,8 @@ Game::move_cost(Game::Move m)
 bool
 Game::is_game_won()
 {
-  return _players[0][0] == _players[1][0] &&
-         _players[0][1] == _players[1][1];
+  return _players[0](0) == _players[1](0) &&
+         _players[0](1) == _players[1](1);
 }
 
 int
@@ -107,32 +119,32 @@ Game::h()
 int
 Game::x1()
 {
-  return _players[0][0];
+  return _players[0](0);
 }
 
 int
 Game::y1()
 {
-  return _players[0][1];
+  return _players[0](1);
 }
 
 int
 Game::x2()
 {
-  return _players[1][0];
+  return _players[1](0);
 }
 
 int
 Game::y2()
 {
-  return _players[1][1];
+  return _players[1](1);
 }
 
-std::vector<boost::shared_ptr<int[2][2]> >
-Game::history()
-{
-  return _history;
-}
+//std::vector<boost::shared_ptr<player_vector> >
+//Game::history()
+//{
+//  return _history;
+//}
 
 int
 Game::cost()
@@ -157,19 +169,20 @@ Game::move_player(int player, Game::Move m)
 void
 Game::save_to_history()
 {
-  boost::shared_ptr<int[2][2]> old_players = boost::shared_ptr<int[2][2]>(new int[2][2]);
-  memcpy(old_players.get(), _players, sizeof _players);
-  _history.push_back(old_players);
+  boost::shared_ptr<player_vector> old_player_1 = boost::shared_ptr<player_vector>(new player_vector(_players[0]));
+  boost::shared_ptr<player_vector> old_player_2 = boost::shared_ptr<player_vector>(new player_vector(_players[1]));
+  _history[0].push_back(old_player_1);
+  _history[1].push_back(old_player_2);
 }
 
 bool
 Game::state_in_history(int x1, int y1, int x2, int y2)
 {
-  for (int i = 0; i < _history.size(); i++) {
-    if (_history[i][0][0] == x1 &&
-        _history[i][0][1] == y1 &&
-        _history[i][1][0] == x2 &&
-        _history[i][1][1] == y2) {
+  for (int i = 0; i < _history[0].size(); i++) {
+    if ((*_history[0][i].get())(0) == x1 &&
+        (*_history[0][i].get())(1) == y1 &&
+        (*_history[1][i].get())(0) == x2 &&
+        (*_history[1][i].get())(1) == y2) {
       return true;
     }
   }

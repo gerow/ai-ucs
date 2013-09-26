@@ -8,6 +8,8 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/numeric/ublas/vector.hpp>
 
+typedef boost::numeric::ublas::vector<int> player_vector;
+
 class Game {
   public:
     Game();
@@ -48,18 +50,22 @@ class Game {
     int
     y2();
 
-    std::vector<boost::shared_ptr<int[2][2]> >
-    history();
+    //std::vector<boost::shared_ptr<player_vector> >
+    //history();
+
+    bool
+    state_in_history(int x1, int y1, int x2, int y2);
 
     int
     cost();
   private:
     int _w, _h;
 
-    int _players[2][2];
+    player_vector
+    _players[2];
 
-    std::vector<boost::shared_ptr<int[2][2]> >
-    _history;
+    std::vector<boost::shared_ptr<player_vector> >
+    _history[2];
 
     int _cost;
 
@@ -68,9 +74,6 @@ class Game {
 
     void
     save_to_history();
-
-    bool
-    state_in_history(int x1, int y1, int x2, int y2);
 };
 
 class GameComparison {

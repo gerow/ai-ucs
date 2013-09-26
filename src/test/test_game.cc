@@ -123,13 +123,16 @@ TEST(GameTest, TestKeepsHistory) {
   ASSERT_EQ(4, g.x2());
   ASSERT_EQ(4, g.y2());
 
-  int (*h)[2];
-  h = g.history()[0].get();
+  //int (*h)[2];
+  //h = g.history()[0].get();
 
-  ASSERT_EQ(1, h[0][0]);
-  ASSERT_EQ(2, h[0][1]);
-  ASSERT_EQ(3, h[1][0]);
-  ASSERT_EQ(4, h[1][1]);
+  //ASSERT_EQ(1, h[0][0]);
+  //ASSERT_EQ(2, h[0][1]);
+  //ASSERT_EQ(3, h[1][0]);
+  //ASSERT_EQ(4, h[1][1]);
+
+  ASSERT_TRUE(g.state_in_history(1, 2, 3, 4));
+  ASSERT_FALSE(g.state_in_history(1, 2, 3, 8));
 }
 
 TEST(GameTest, TestKeepsCost) {
