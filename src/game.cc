@@ -198,5 +198,5 @@ GameComparison::GameComparison(const bool& revparam)
 bool
 GameComparison::operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const
 {
-  return lhs.get()->cost() <= rhs.get()->cost();
+  return lhs->cost() <= rhs->cost();
 }
