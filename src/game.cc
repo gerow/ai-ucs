@@ -176,3 +176,14 @@ Game::state_in_history(int x1, int y1, int x2, int y2)
 
   return false;
 }
+
+GameComparison::GameComparison(const bool& revparam)
+{
+  _reverse = revparam;
+}
+
+bool
+GameComparison::operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const
+{
+  return lhs.get()->cost() <= rhs.get()->cost();
+}

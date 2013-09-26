@@ -77,10 +77,10 @@ class GameComparison {
 public:
   GameComparison(const bool& revparam=false);
 
-  bool operator()(const Game &lhs, const Game &rhs) const;
+  bool operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const;
 };
 
-typedef std::priority_queue<Game, std::vector<Game>, GameComparison> game_priority_queue;
+typedef std::priority_queue<boost::shared_ptr<Game>, std::vector<boost::shared_ptr<Game> >, GameComparison> game_priority_queue;
 
 #endif /* _GAME_H */
 
