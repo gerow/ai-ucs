@@ -6,6 +6,7 @@
 #include <queue>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/numeric/ublas/vector.hpp>
 
 class Game {
   public:
