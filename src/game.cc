@@ -174,7 +174,7 @@ Game::save(std::string filename)
   std::ofstream f;
   f.open(filename.c_str());
 
-  f << _history[0].size() << "\n";
+  f << _cost << "\n";
 
   for (int i = 0; i < _history[0].size(); i++) {
     f << (*_history[0][i])(0) << " "
