@@ -67,5 +67,7 @@ main(int argc, char** argv)
 
   std::cout << "No solution\n";
 
+  g->save_no_solution("output.txt");
+
   return 0;
 }

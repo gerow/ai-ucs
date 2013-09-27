@@ -200,13 +200,13 @@ Game::save_no_solution(std::string filename)
 bool
 Game::move_player(int player, Game::Move m)
 {
-  if (m == Game::RIGHT && _players[player][0] < _w) {
+  if (m == Game::RIGHT && _players[player][1] < _w) {
     _players[player][1]++;
-  } else if (m == Game::LEFT && _players[player][0] > 1) {
+  } else if (m == Game::LEFT && _players[player][1] > 1) {
     _players[player][1]--;
-  } else if (m == Game::DOWN && _players[player][1] < _h) {
+  } else if (m == Game::DOWN && _players[player][0] < _h) {
     _players[player][0]++;
-  } else if (m == Game::UP && _players[player][1] > 1) {
+  } else if (m == Game::UP && _players[player][0] > 1) {
     _players[player][0]--;
   } else {
     return false;

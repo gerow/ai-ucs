@@ -126,9 +126,9 @@ TEST(GameTest, TestKeepsHistory) {
 TEST(GameTest, TestKeepsCost) {
   Game g(5, 5, 1, 2, 3, 4);
 
-  g.move(Game::UP);
+  g.move(Game::RIGHT);
 
-  ASSERT_EQ(3, g.cost());
+  ASSERT_EQ(5, g.cost());
 }
 
 TEST(GameTest, TestPriorityQueue) {
@@ -154,7 +154,7 @@ TEST(GameTest, TestMovesRightProperly2) {
 
   ASSERT_EQ(1, g.x1());
   ASSERT_EQ(6, g.y1());
-  ASSERT_EQ(5, g.x2());
+  ASSERT_EQ(6, g.x2());
   ASSERT_EQ(7, g.y2());
 }
 
