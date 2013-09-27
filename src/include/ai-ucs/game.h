@@ -23,7 +23,7 @@ class Game {
     static boost::shared_ptr<Game>
     load(std::string filename);
 
-    void
+    bool
     move(Move m);
 
     int
@@ -58,6 +58,12 @@ class Game {
 
     int
     cost();
+
+    void
+    save(std::string filename);
+
+    void
+    save_no_solution(std::string filename);
   private:
     int _w, _h;
 
@@ -69,7 +75,7 @@ class Game {
 
     int _cost;
 
-    void
+    bool
     move_player(int player, Move m);
 
     void

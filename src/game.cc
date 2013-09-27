@@ -64,37 +64,53 @@ Game::load(std::string filename)
   return g;
 }
 
-void
+bool
 Game::move(Game::Move m)
 {
   // first, throw the current position into
   // the history vector
   save_to_history();
-  move_player(0, m);
+  if (!move_player(0, m)) {
+    return false;
+  }
   if (m == Game::RIGHT) {
-    move_player(1, Game::DOWN);
+    if (!move_player(1, Game::DOWN)) {
+      return false;
+    }
   } else if (m == Game::LEFT) {
-    move_player(1, Game::UP);
+    if (!move_player(1, Game::UP)) {
+      return false;
+    }
   } else if (m == Game::DOWN) {
-    move_player(1, Game::LEFT);
+    if (!move_player(1, Game::LEFT)) {
+      return false;
+    }
   } else if (m == Game::UP) {
-    move_player(1, Game::RIGHT);
+    if (!move_player(1, Game::RIGHT)) {
+      return false;
+    }
   }
 
   _cost += move_cost(m);
+
+  return true;
 }
 
 int
 Game::move_cost(Game::Move m)
 {
-  int costs[4] = {
-    5, /* RIGHT */
-    4, /* LEFT */
-    6, /* DOWN */
-    3  /* UP */
-  };
+  switch (m) {
+    case Game::RIGHT:
+      return 5;
+    case Game::LEFT:
+      return 4;
+    case Game::DOWN:
+      return 6;
+    case Game::UP:
+      return 3;
+  }
 
-  return costs[m];
+  return -1000;
 }
 
 bool
@@ -153,17 +169,50 @@ Game::cost()
 }
 
 void
+Game::save(std::string filename)
+{
+  std::ofstream f;
+  f.open(filename.c_str());
+
+  f << _history[0].size() << "\n";
+
+  for (int i = 0; i < _history[0].size(); i++) {
+    f << (*_history[0][i])(0) << " "
+      << (*_history[0][i])(1) << "\n";
+  }
+
+  f << x1() << " " << y1() << "\n";
+
+  f.close();
+}
+
+void
+Game::save_no_solution(std::string filename)
+{
+  std::ofstream f;
+  f.open(filename.c_str());
+
+  f << -1 << "\n";
+
+  f.close();
+}
+
+bool
 Game::move_player(int player, Game::Move m)
 {
   if (m == Game::RIGHT && _players[player][0] < _w) {
-    _players[player][0]++;
-  } else if (m == Game::LEFT && _players[player][0] > 1) {
-    _players[player][0]--;
-  } else if (m == Game::DOWN && _players[player][1] < _h) {
     _players[player][1]++;
-  } else if (m == Game::UP && _players[player][1] > 1) {
+  } else if (m == Game::LEFT && _players[player][0] > 1) {
     _players[player][1]--;
+  } else if (m == Game::DOWN && _players[player][1] < _h) {
+    _players[player][0]++;
+  } else if (m == Game::UP && _players[player][1] > 1) {
+    _players[player][0]--;
+  } else {
+    return false;
   }
+
+  return true;
 }
 
 void
@@ -198,5 +247,5 @@ GameComparison::GameComparison(const bool& revparam)
 bool
 GameComparison::operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const
 {
-  return lhs->cost() <= rhs->cost();
+  return lhs->cost() > rhs->cost();
 }
