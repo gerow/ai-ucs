@@ -104,16 +104,36 @@ TEST(GameTest, TestMoveCostIsCorrect) {
 }
 
 TEST(GameTest, TestLoadFromFile) {
-  boost::shared_ptr<Game> g = Game::load("src/test/files/test_input.txt");
+  boost::shared_ptr<std::vector<boost::shared_ptr<Game> > > g = Game::load("src/test/files/test_input.txt");
 
-  ASSERT_EQ(7, g.get()->w());
-  ASSERT_EQ(7, g.get()->h());
+  ASSERT_EQ(4, g->operator[](0)->w());
+  ASSERT_EQ(4, g->operator[](0)->h());
 
-  ASSERT_EQ(1, g.get()->x1());
-  ASSERT_EQ(5, g.get()->y1());
+  ASSERT_EQ(1, g->operator[](0)->x1());
+  ASSERT_EQ(2, g->operator[](0)->y1());
 
-  ASSERT_EQ(3, g.get()->x2());
-  ASSERT_EQ(7, g.get()->y2());
+  ASSERT_EQ(3, g->operator[](0)->x2());
+  ASSERT_EQ(4, g->operator[](0)->y2());
+
+
+  ASSERT_EQ(6, g->operator[](1)->w());
+  ASSERT_EQ(6, g->operator[](1)->h());
+
+  ASSERT_EQ(2, g->operator[](1)->x1());
+  ASSERT_EQ(3, g->operator[](1)->y1());
+
+  ASSERT_EQ(4, g->operator[](1)->x2());
+  ASSERT_EQ(3, g->operator[](1)->y2());
+
+
+  ASSERT_EQ(9, g->operator[](2)->w());
+  ASSERT_EQ(9, g->operator[](2)->h());
+
+  ASSERT_EQ(7, g->operator[](2)->x1());
+  ASSERT_EQ(6, g->operator[](2)->y1());
+
+  ASSERT_EQ(8, g->operator[](2)->x2());
+  ASSERT_EQ(6, g->operator[](2)->y2());
 }
 
 TEST(GameTest, TestKeepsHistory) {

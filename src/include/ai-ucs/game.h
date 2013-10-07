@@ -21,7 +21,7 @@ class Game {
     enum Move { RIGHT, LEFT, DOWN, UP };
     enum Heuristic { EUCLIDIAN, CANBERRA, KNIGHT };
 
-    static boost::shared_ptr<Game>
+    static boost::shared_ptr<std::vector<boost::shared_ptr<Game> > >
     load(std::string filename);
 
     bool

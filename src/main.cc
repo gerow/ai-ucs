@@ -41,30 +41,54 @@ int
 main(int argc, char** argv)
 {
   std::cout << "Loading input.txt from current working directory...\n";
-  boost::shared_ptr<Game> g = Game::load("input.txt");
+  boost::shared_ptr<std::vector<boost::shared_ptr<Game> > > g = Game::load("input.txt");
   std::cout << "Done!\n";
 
   game_priority_queue q;
 
   euclidian_priority_queue eq;
-  int e_expanded = 0;
-  boost::shared_ptr<Game> e_solution(new Game);
+  std::vector<int> e_expanded;
+  for (int i = 0; i < 3; i++) {
+    e_expanded.push_back(0);
+  }
+  std::vector<boost::shared_ptr<Game> > e_solution;
+  for (int i = 0; i < 3; i++) {
+    e_solution.push_back(boost::shared_ptr<Game>(new Game));
+  }
   canberra_priority_queue cq;
-  int c_expanded = 0;
-  boost::shared_ptr<Game> c_solution(new Game);
+  std::vector<int> c_expanded;
+  for (int i = 0; i < 3; i++) {
+    c_expanded.push_back(0);
+  }
+  std::vector<boost::shared_ptr<Game> > c_solution;
+  for (int i = 0; i < 3; i++) {
+    c_solution.push_back(boost::shared_ptr<Game>(new Game));
+  }
   knight_priority_queue kq;
-  int k_expanded = 0;
-  boost::shared_ptr<Game> k_solution(new Game);
+  std::vector<int> k_expanded;
+  for (int i = 0; i < 3; i++) {
+    k_expanded.push_back(0);
+  }
+  std::vector<boost::shared_ptr<Game> > k_solution;
+  for (int i = 0; i < 3; i++) {
+    k_solution.push_back(boost::shared_ptr<Game>(new Game));
+  }
 
-  solve(eq, g, e_expanded, e_solution);
-  solve(cq, g, c_expanded, c_solution);
-  solve(kq, g, k_expanded, k_solution);
+  for (int i = 0; i < 3; i++) {
+    solve(eq, (*g)[i], e_expanded[i], e_solution[i]);
+    solve(cq, (*g)[i], c_expanded[i], c_solution[i]);
+    solve(kq, (*g)[i], k_expanded[i], k_solution[i]);
 
-  std::cout << "Nodes Expanded\n";
-  std::cout << "Euclidian Canberra Knight\n";
-  std::cout << e_expanded << " " << c_expanded << " " << k_expanded << "\n";
-
-  e_solution->save("output.txt");
+    while (!eq.empty()) {
+      eq.pop();
+    }
+    while (!cq.empty()) {
+      cq.pop();
+    }
+    while (!kq.empty()) {
+      kq.pop();
+    }
+  }
 
   /*
   // first do euclidian

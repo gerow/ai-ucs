@@ -46,23 +46,28 @@ Game::Game(Game &g) :
   _history[1] = g._history[1];
 }
 
-boost::shared_ptr<Game>
+boost::shared_ptr<std::vector<boost::shared_ptr<Game> > >
 Game::load(std::string filename)
 {
   int size, x1, y1, x2, y2;
   std::ifstream f;
   f.open(filename.c_str());
 
-  f >> size;
-  f >> x1;
-  f >> y1;
-  f >> x2;
-  f >> y2;
+  boost::shared_ptr<std::vector<boost::shared_ptr<Game> > > out(new std::vector<boost::shared_ptr<Game> >());
+
+  for (int i = 0; i < 3; i++) {
+    f >> size;
+    f >> x1;
+    f >> y1;
+    f >> x2;
+    f >> y2;
+
+    out->push_back(boost::shared_ptr<Game>(new Game(size, size, x1, y1, x2, y2)));
+  }
 
   f.close();
 
-  boost::shared_ptr<Game> g(new Game(size, size, x1, y1, x2, y2));
-  return g;
+  return out;
 }
 
 bool
