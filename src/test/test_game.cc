@@ -205,3 +205,11 @@ TEST(GameTest, TestCanberraDistance) {
   ASSERT_EQ(2.0/3.0, g.canberra_distance());
   ASSERT_EQ((2.0/4.0) + (2.0/6.0), g2.canberra_distance());
 }
+
+TEST(GameTest, KnightDistance) {
+  Game g(7, 7, 1, 1, 2, 3);
+  Game g2(7, 7, 1, 1, 2, 2);
+
+  ASSERT_EQ(1, g.knight_distance());
+  ASSERT_EQ(1, g2.knight_distance());
+}

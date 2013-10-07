@@ -238,6 +238,36 @@ Game::canberra_distance()
   return x_frac + y_frac;
 }
 
+int
+Game::knight_distance()
+{
+  /* found this neat algorithm here http://olympiad.cs.uct.ac.za/old/saco2007/day1_2007_solutions.pdf */
+
+  int vx, vy;
+
+  vx = abs(x1() - x2());
+  vy = abs(y1() - y2());
+
+  if (!(vy <= vx)) {
+    int temp = vy;
+    vy = vx;
+    vx = temp;
+  }
+
+  std::cout << "vy is " << vy << "\n";
+  std::cout << "vx is " << vx << "\n";
+
+  int d = vx - vy;
+
+  if (vy > d) {
+    std::cout << "vy > d\n";
+    return 2 * ((vy - d) / 3) + d;
+  } else {
+    std::cout << "NOT vy > d\n";
+    return d - 2 * ((d - vy) / 4);
+  }
+}
+
 bool
 Game::move_player(int player, Game::Move m)
 {

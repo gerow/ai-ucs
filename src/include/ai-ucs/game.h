@@ -83,7 +83,7 @@ class Game {
     double
     canberra_distance();
 
-    double
+    int
     knight_distance();
   private:
     int _w, _h;
