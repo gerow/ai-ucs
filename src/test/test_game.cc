@@ -209,7 +209,9 @@ TEST(GameTest, TestCanberraDistance) {
 TEST(GameTest, KnightDistance) {
   Game g(7, 7, 1, 1, 2, 3);
   Game g2(7, 7, 1, 1, 2, 2);
+  Game g3(7, 7, 1, 1, 3, 3);
 
   ASSERT_EQ(1, g.knight_distance());
-  ASSERT_EQ(1, g2.knight_distance());
+  ASSERT_EQ(2, g2.knight_distance());
+  ASSERT_EQ(4, g3.knight_distance());
 }

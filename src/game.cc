@@ -238,34 +238,32 @@ Game::canberra_distance()
   return x_frac + y_frac;
 }
 
+
+
 int
 Game::knight_distance()
 {
-  /* found this neat algorithm here http://olympiad.cs.uct.ac.za/old/saco2007/day1_2007_solutions.pdf */
+  // this lookup table only works for any move less than
+  // 9 rows or 9 ranks away, but it should be enough for our
+  // problem
+  static const int kn_lookup[81] = {
+    0, 3, 2, 3, 2, 3, 4, 5, 4,
+    3, 2, 1, 2, 3, 4, 3, 4, 5,
+    2, 1, 4, 3, 2, 3, 4, 5, 4,
+    3, 2, 3, 2, 3, 4, 3, 4, 5,
+    2, 3, 2, 3, 4, 3, 4, 5, 4,
+    3, 4, 3, 4, 3, 4, 5, 4, 5,
+    4, 3, 4, 3, 4, 5, 4, 5, 6,
+    5, 4, 5, 4, 5, 4, 5, 6, 5,
+    4, 5, 4, 5, 4, 5, 6, 5, 6 
+  };
 
   int vx, vy;
 
   vx = abs(x1() - x2());
   vy = abs(y1() - y2());
 
-  if (!(vy <= vx)) {
-    int temp = vy;
-    vy = vx;
-    vx = temp;
-  }
-
-  std::cout << "vy is " << vy << "\n";
-  std::cout << "vx is " << vx << "\n";
-
-  int d = vx - vy;
-
-  if (vy > d) {
-    std::cout << "vy > d\n";
-    return 2 * ((vy - d) / 3) + d;
-  } else {
-    std::cout << "NOT vy > d\n";
-    return d - 2 * ((d - vy) / 4);
-  }
+  return kn_lookup[vx + vy * 9];
 }
 
 bool
