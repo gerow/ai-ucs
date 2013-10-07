@@ -100,18 +100,7 @@ Game::move(Game::Move m)
 int
 Game::move_cost(Game::Move m)
 {
-  switch (m) {
-    case Game::RIGHT:
-      return 5;
-    case Game::LEFT:
-      return 4;
-    case Game::DOWN:
-      return 6;
-    case Game::UP:
-      return 3;
-  }
-
-  return -1000;
+  return 1;
 }
 
 bool
