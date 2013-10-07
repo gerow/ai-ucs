@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <math.h>
 
 Game::Game() :
   _w(0),
@@ -156,6 +157,30 @@ Game::y2()
   return _players[1](1);
 }
 
+double
+Game::x1d()
+{
+  return (double) _players[0](0);
+}
+
+double
+Game::y1d()
+{
+  return (double) _players[0](1);
+}
+
+double
+Game::x2d()
+{
+  return (double) _players[1](0);
+}
+
+double
+Game::y2d()
+{
+  return (double) _players[1](1);
+}
+
 //std::vector<boost::shared_ptr<player_vector> >
 //Game::history()
 //{
@@ -195,6 +220,13 @@ Game::save_no_solution(std::string filename)
   f << -1 << "\n";
 
   f.close();
+}
+
+double
+Game::euclidian_distance()
+{
+  double answer_squared = pow((x2d() - x1d()), 2) + pow((y2d() - y1d()), 2);
+  return sqrt(answer_squared);
 }
 
 bool

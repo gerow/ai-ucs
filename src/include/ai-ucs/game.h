@@ -41,14 +41,26 @@ class Game {
     int
     x1();
 
+    double
+    x1d();
+
     int
     y1();
+
+    double
+    y1d();
 
     int
     x2();
 
+    double
+    x2d();
+
     int
     y2();
+
+    double
+    y2d();
 
     //std::vector<boost::shared_ptr<player_vector> >
     //history();
@@ -64,6 +76,15 @@ class Game {
 
     void
     save_no_solution(std::string filename);
+
+    double
+    euclidian_distance();
+
+    double
+    canberra_distance();
+
+    double
+    knight_distance();
   private:
     int _w, _h;
 

@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "ai-ucs/game.h"
 
+#include <math.h>
+
 TEST(GameTest, TestConstructsProperly) {
   Game g(5, 5, 1, 2, 3, 4);
 
@@ -186,6 +188,12 @@ TEST(GameTest, TestCopyConstructor2) {
 
   delete g;
   delete g2;
+}
 
+TEST(GameTest, TestEuclidianDistance) {
+  Game g(7, 7, 1, 1, 2, 2);
+  Game g2(7, 7, 1, 1, 5, 3);
 
+  ASSERT_EQ(sqrt(2.0), g.euclidian_distance());
+  ASSERT_EQ(sqrt(20.0), g2.euclidian_distance());
 }
