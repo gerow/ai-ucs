@@ -244,7 +244,12 @@ Game::knight_distance()
   // this lookup table only works for any move less than
   // 9 rows or 9 ranks away, but it should be enough for our
   // problem
-  static const int kn_lookup[81] = {
+  //
+  // The alternative is to use a breadth first search to find out
+  // the answer, but heuristics are kinda supposed to be fast, and
+  // doing that would defeat the purpose. So we use breadth first
+  // search to generate this table instead.
+  static const char kn_lookup[81] = {
     0, 3, 2, 3, 2, 3, 4, 5, 4,
     3, 2, 1, 2, 3, 4, 3, 4, 5,
     2, 1, 4, 3, 2, 3, 4, 5, 4,
@@ -280,6 +285,22 @@ Game::move_player(int player, Game::Move m)
   }
 
   return true;
+}
+
+double
+Game::astar(Heuristic h)
+{
+  double heuristic;
+
+  if (h == EUCLIDIAN) {
+    heuristic = euclidian_distance();
+  } else if (h == CANBERRA) {
+    heuristic = canberra_distance();
+  } else if (h == KNIGHT) {
+    heuristic = knight_distance();
+  }
+
+  return _cost + heuristic;
 }
 
 void

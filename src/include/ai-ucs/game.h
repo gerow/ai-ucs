@@ -19,6 +19,7 @@ class Game {
     Game(Game &g);
 
     enum Move { RIGHT, LEFT, DOWN, UP };
+    enum Heuristic { EUCLIDIAN, CANBERRA, KNIGHT };
 
     static boost::shared_ptr<Game>
     load(std::string filename);
@@ -85,6 +86,9 @@ class Game {
 
     int
     knight_distance();
+
+    double
+    astar(Heuristic h);
   private:
     int _w, _h;
 

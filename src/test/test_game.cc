@@ -215,3 +215,12 @@ TEST(GameTest, KnightDistance) {
   ASSERT_EQ(2, g2.knight_distance());
   ASSERT_EQ(4, g3.knight_distance());
 }
+
+TEST(GameTest, AStar) {
+  Game g(7, 7, 1, 1, 2, 2);
+
+  ASSERT_EQ(sqrt(2.0), g.astar(Game::EUCLIDIAN));
+
+  g.move(Game::RIGHT);
+  ASSERT_EQ(g.cost() + g.euclidian_distance(), g.astar(Game::EUCLIDIAN));
+}
