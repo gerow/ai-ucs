@@ -229,6 +229,15 @@ Game::euclidian_distance()
   return sqrt(answer_squared);
 }
 
+double
+Game::canberra_distance()
+{
+  double x_frac = abs(x2d() - x1d()) / (x2d() + x1d());
+  double y_frac = abs(y2d() - y1d()) / (y2d() + y1d());
+
+  return x_frac + y_frac;
+}
+
 bool
 Game::move_player(int player, Game::Move m)
 {

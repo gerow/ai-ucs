@@ -197,3 +197,11 @@ TEST(GameTest, TestEuclidianDistance) {
   ASSERT_EQ(sqrt(2.0), g.euclidian_distance());
   ASSERT_EQ(sqrt(20.0), g2.euclidian_distance());
 }
+
+TEST(GameTest, TestCanberraDistance) {
+  Game g(7, 7, 1, 1, 2, 2);
+  Game g2(7, 7, 1, 2, 3, 4);
+
+  ASSERT_EQ(2.0/3.0, g.canberra_distance());
+  ASSERT_EQ((2.0/4.0) + (2.0/6.0), g2.canberra_distance());
+}
