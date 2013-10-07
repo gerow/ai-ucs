@@ -115,6 +115,30 @@ public:
   bool operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const;
 };
 
+class EuclidianComparison {
+  bool _reverse;
+public:
+  EuclidianComparison(const bool& revparam=false);
+
+  bool operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const;
+};
+
+class CanberraComparison {
+  bool _reverse;
+public:
+  CanberraComparison(const bool& revparam=false);
+
+  bool operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const;
+};
+
+class KnightComparison {
+  bool _reverse;
+public:
+  KnightComparison(const bool& revparam=false);
+
+  bool operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const;
+};
+
 typedef std::priority_queue<boost::shared_ptr<Game>, std::vector<boost::shared_ptr<Game> >, GameComparison> game_priority_queue;
 
 #endif /* _GAME_H */

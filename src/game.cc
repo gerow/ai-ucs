@@ -337,3 +337,36 @@ GameComparison::operator()(const boost::shared_ptr<Game> &lhs, const boost::shar
 {
   return lhs->cost() > rhs->cost();
 }
+
+EuclidianComparison::EuclidianComparison(const bool& revparam)
+{
+  _reverse = revparam;
+}
+
+bool
+EuclidianComparison::operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const
+{
+  return lhs->astar(Game::EUCLIDIAN) > rhs->astar(Game::EUCLIDIAN);
+}
+
+CanberraComparison::CanberraComparison(const bool& revparam)
+{
+  _reverse = revparam;
+}
+
+bool
+CanberraComparison::operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const
+{
+  return lhs->astar(Game::CANBERRA) > rhs->astar(Game::CANBERRA);
+}
+
+KnightComparison::KnightComparison(const bool& revparam)
+{
+  _reverse = revparam;
+}
+
+bool
+KnightComparison::operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const
+{
+  return lhs->astar(Game::KNIGHT) > rhs->astar(Game::KNIGHT);
+}
