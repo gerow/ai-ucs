@@ -1,7 +1,10 @@
 #include "ai-ucs/game.h"
 
 #include <boost/shared_ptr.hpp>
+#include <boost/format.hpp>
 #include <queue>
+#include <fstream>
+#include <iomanip>
 
 template <class T>
 void
@@ -89,6 +92,26 @@ main(int argc, char** argv)
       kq.pop();
     }
   }
+
+  // alright, now we should have some solutions!
+  std::ofstream o;
+  o.open("output.txt");
+
+  // this should give us a nice tabular output
+  o << std::setw(20);
+
+  o << "Nodes Expanded" << std::endl;
+  // lead with an empty string to give us 20 characters to
+  // make things look nice and tabular
+  o << boost::format("%-10s %-10s %-10s %-10s\n") % "" % "Euclidian" % "Canberra" % "Knight";
+  for (int i = 0; i < 3; i++) {
+    std::ostringstream os;
+    os << "Input" << i;
+
+    o << boost::format("%-10s %-10s %-10s %-10s\n") % os.str() % e_expanded[i] % c_expanded[i] % k_expanded[i];
+  }
+
+  o.close();
 
   /*
   // first do euclidian
