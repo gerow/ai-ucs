@@ -136,15 +136,25 @@ TEST(GameTest, TestPriorityQueue) {
 
   Game *g = new Game(5, 5, 5, 5, 5, 5);
   Game *g2 = new Game(5, 5, 1, 1, 1, 1);
-  g2->move(Game::RIGHT);
+  Game *g3 = new Game(5, 5, 2, 2, 2, 2);
 
-  q.push(boost::shared_ptr<Game>(g2));
+  g2->move(Game::RIGHT);
+  // g3 should have a higher cost
+  g3->move(Game::DOWN);
+
+  q.push(boost::shared_ptr<Game>(g3));
   q.push(boost::shared_ptr<Game>(g));
+  q.push(boost::shared_ptr<Game>(g2));
 
   ASSERT_EQ(g->cost(), 0);
   ASSERT_EQ(g2->cost(), 5);
 
-  ASSERT_EQ(q.top()->x1(), 5);
+  ASSERT_EQ(5, q.top()->x1());
+  q.pop();
+  ASSERT_EQ(1, q.top()->x1());
+  q.pop();
+  // expect it to be 3 since we moved down, incrmenting the x1 value
+  ASSERT_EQ(3, q.top()->x1());
 }
 
 TEST(GameTest, TestMovesRightProperly2) {
