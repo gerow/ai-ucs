@@ -238,8 +238,6 @@ Game::canberra_distance()
   return x_frac + y_frac;
 }
 
-
-
 int
 Game::knight_distance()
 {
