@@ -193,16 +193,26 @@ Game::save(std::string filename)
   std::ofstream f;
   f.open(filename.c_str());
 
-  f << _cost << "\n";
+  f << path_to_string();
+
+  f.close();
+}
+
+std::string
+Game::path_to_string()
+{
+  std::ostringstream oss;
+
+  oss << _cost << "\n";
 
   for (int i = 0; i < _history[0].size(); i++) {
-    f << (*_history[0][i])(0) << " "
+    oss << (*_history[0][i])(0) << " "
       << (*_history[0][i])(1) << "\n";
   }
 
-  f << x1() << " " << y1() << "\n";
+  oss << x1() << " " << y1() << "\n";
 
-  f.close();
+  return oss.str();
 }
 
 void

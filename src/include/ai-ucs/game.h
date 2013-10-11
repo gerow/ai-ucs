@@ -75,6 +75,9 @@ class Game {
     void
     save(std::string filename);
 
+    std::string
+    path_to_string();
+
     void
     save_no_solution(std::string filename);
 
