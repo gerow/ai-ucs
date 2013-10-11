@@ -1,10 +1,10 @@
-#include "ai-ucs/game.h"
-
 #include <boost/shared_ptr.hpp>
 #include <boost/format.hpp>
 #include <queue>
 #include <fstream>
 #include <iomanip>
+
+#include "ai-ucs/game.h"
 
 template <class T>
 bool
