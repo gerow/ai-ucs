@@ -203,14 +203,14 @@ Game::path_to_string()
 {
   std::ostringstream oss;
 
-  oss << _cost << "\n";
+  //oss << _cost << "\n";
 
   for (int i = 0; i < _history[0].size(); i++) {
     oss << (*_history[0][i])(0) << " "
-      << (*_history[0][i])(1) << "\n";
+      << (*_history[0][i])(1) << " ";
   }
 
-  oss << x1() << " " << y1() << "\n";
+  oss << x1() << " " << y1();
 
   return oss.str();
 }
