@@ -287,21 +287,13 @@ Game::astar(Heuristic h)
   double heuristic;
 
   if (h == EUCLIDIAN) {
-    std::cout << "Heuristic is euclidian\n";
     heuristic = euclidian_distance();
   } else if (h == CANBERRA) {
-    std::cout << "Heuristic is canberra\n";
     heuristic = canberra_distance();
   } else if (h == KNIGHT) {
-    std::cout << "Heuristic is knight\n";
     heuristic = knight_distance();
   }
 
-  std::cout << "this cost heuristic is " << (_cost + heuristic) << "\n";
-
-  if (is_game_won()) {
-    std::cout << "this is a potential solution!\n";
-  }
   return _cost + heuristic;
 }
 

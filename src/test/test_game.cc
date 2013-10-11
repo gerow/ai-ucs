@@ -97,10 +97,10 @@ TEST(GameTest, TestMovesLeftProperlyAtWall) {
 TEST(GameTest, TestMoveCostIsCorrect) {
   Game g(5, 5, 1, 1, 3, 4);
 
-  ASSERT_EQ(1, g.move_cost(Game::UP));
-  ASSERT_EQ(1, g.move_cost(Game::RIGHT));
-  ASSERT_EQ(1, g.move_cost(Game::DOWN));
-  ASSERT_EQ(1, g.move_cost(Game::LEFT));
+  ASSERT_EQ(2, g.move_cost(Game::UP));
+  ASSERT_EQ(2, g.move_cost(Game::RIGHT));
+  ASSERT_EQ(2, g.move_cost(Game::DOWN));
+  ASSERT_EQ(2, g.move_cost(Game::LEFT));
 }
 
 TEST(GameTest, TestLoadFromFile) {
@@ -150,7 +150,7 @@ TEST(GameTest, TestKeepsCost) {
 
   g.move(Game::RIGHT);
 
-  ASSERT_EQ(1, g.cost());
+  ASSERT_EQ(2, g.cost());
 }
 
 TEST(GameTest, TestPriorityQueue) {
