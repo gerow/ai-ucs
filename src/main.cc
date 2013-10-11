@@ -7,7 +7,7 @@
 #include <iomanip>
 
 template <class T>
-void
+bool
 solve(T q, boost::shared_ptr<Game> game, int &expanded, boost::shared_ptr<Game> solution)
 {
   expanded = 0;
@@ -21,7 +21,7 @@ solve(T q, boost::shared_ptr<Game> game, int &expanded, boost::shared_ptr<Game> 
 
     if (cur->is_game_won()) {
       *solution = *cur;
-      return;
+      return true;
     }
     Game::Move moves[4] = {Game::RIGHT, Game::LEFT, Game::DOWN, Game::UP};
     for (int i = 0; i < 4; i++) {
@@ -38,6 +38,9 @@ solve(T q, boost::shared_ptr<Game> game, int &expanded, boost::shared_ptr<Game> 
       }
     }
   }
+
+  expanded = -1;
+  return false;
 }
 
 int
@@ -55,6 +58,7 @@ main(int argc, char** argv)
     e_expanded.push_back(0);
   }
   std::vector<boost::shared_ptr<Game> > e_solution;
+  std::vector<bool> e_found;
   for (int i = 0; i < 3; i++) {
     e_solution.push_back(boost::shared_ptr<Game>(new Game));
   }
@@ -64,6 +68,7 @@ main(int argc, char** argv)
     c_expanded.push_back(0);
   }
   std::vector<boost::shared_ptr<Game> > c_solution;
+  std::vector<bool> c_found;
   for (int i = 0; i < 3; i++) {
     c_solution.push_back(boost::shared_ptr<Game>(new Game));
   }
@@ -73,14 +78,27 @@ main(int argc, char** argv)
     k_expanded.push_back(0);
   }
   std::vector<boost::shared_ptr<Game> > k_solution;
+  std::vector<bool> k_found;
   for (int i = 0; i < 3; i++) {
     k_solution.push_back(boost::shared_ptr<Game>(new Game));
   }
 
   for (int i = 0; i < 3; i++) {
-    solve(eq, (*g)[i], e_expanded[i], e_solution[i]);
-    solve(cq, (*g)[i], c_expanded[i], c_solution[i]);
-    solve(kq, (*g)[i], k_expanded[i], k_solution[i]);
+    if (solve(eq, (*g)[i], e_expanded[i], e_solution[i])) {
+      e_found.push_back(true);
+    } else {
+      e_found.push_back(false);
+    }
+    if (solve(cq, (*g)[i], c_expanded[i], c_solution[i])) {
+      c_found.push_back(true);
+    } else {
+      c_found.push_back(false);
+    }
+    if (solve(kq, (*g)[i], k_expanded[i], k_solution[i])) {
+      k_found.push_back(true);
+    } else {
+      k_found.push_back(false);
+    }
 
     while (!eq.empty()) {
       eq.pop();
@@ -108,8 +126,34 @@ main(int argc, char** argv)
     std::ostringstream os;
     os << "Input" << i;
 
-    o << boost::format("%-10s %-10s %-10s %-10s\n") % os.str() % e_expanded[i] % c_expanded[i] % k_expanded[i];
+    std::ostringstream e_o;
+    std::ostringstream c_o;
+    std::ostringstream k_o;
+    if (e_expanded[i] == -1) {
+      e_o << "-";
+    } else {
+      e_o << e_expanded[i];
+    }
+    std::string c_str;
+    if (c_expanded[i] == -1) {
+      c_o << "-";
+    } else {
+      c_o << c_expanded[i];
+    }
+   std::string k_str;
+    if (k_expanded[i] == -1) {
+      k_o << "-";
+    } else {
+      k_o << k_expanded[i];
+    } 
+
+    o << boost::format("%-10s %-10s %-10s %-10s\n") % os.str() % e_o.str() % c_o.str() % k_o.str();
   }
+
+  // now we find the optimal path solutions and print them out
+  #define E_PATH 0
+  #define C_PATH 1
+  #define K_PATH 2
 
   o.close();
 
