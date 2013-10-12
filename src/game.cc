@@ -205,12 +205,13 @@ Game::path_to_string()
 
   //oss << _cost << "\n";
 
-  for (int i = 0; i < _history[0].size(); i++) {
-    oss << (*_history[0][i])(0) << " "
-      << (*_history[0][i])(1) << " ";
+  // start at 1 since that's what the example says
+  for (int i = 1; i < _history[0].size(); i++) {
+    oss << "(" << (*_history[0][i])(0) << ", "
+      << (*_history[0][i])(1) << ") ";
   }
 
-  oss << x1() << " " << y1();
+  oss << "(" << x1() << ", " << y1() << ")";
 
   return oss.str();
 }

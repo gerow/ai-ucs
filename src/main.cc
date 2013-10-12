@@ -3,9 +3,14 @@
 #include <queue>
 #include <fstream>
 #include <iomanip>
+#include <limits.h>
 
 #include "ai-ucs/game.h"
 
+/**
+ * This function is a bit of a mess... but it works.  Also, using templating for duck
+ * typing isn't exactly best practice.
+ */
 template <class T>
 bool
 solve(T q, boost::shared_ptr<Game> game, int &expanded, boost::shared_ptr<Game> solution)
@@ -154,6 +159,49 @@ main(int argc, char** argv)
   #define E_PATH 0
   #define C_PATH 1
   #define K_PATH 2
+
+  std::vector<boost::shared_ptr<Game> > best_solutions;
+  for (int prob_idx = 0; prob_idx < 3; prob_idx++) {
+    int best_solution = 0;
+    int best_expanded = INT_MAX;
+
+    if(e_expanded[prob_idx] < best_expanded) {
+      best_solution = E_PATH;
+      best_expanded = e_expanded[prob_idx];
+    }
+    if(c_expanded[prob_idx] < best_expanded) {
+      best_solution = C_PATH;
+      best_expanded = c_expanded[prob_idx];
+    }
+    if(k_expanded[prob_idx] < best_expanded) {
+      best_solution = K_PATH;
+      best_expanded = k_expanded[prob_idx];
+    }
+
+    if (best_solution == E_PATH) {
+      best_solutions.push_back(e_solution[prob_idx]);
+    } else if (best_solution == C_PATH) {
+      best_solutions.push_back(c_solution[prob_idx]);
+    } else if (best_solution == K_PATH) {
+      best_solutions.push_back(k_solution[prob_idx]);
+    }
+  }
+
+  o << "\n\nOptimal Path Solution:\n";
+  for(int i = 0; i < 3; i++) {
+    o << "Input" << (i + 1) << ": ";
+    if (e_found[i]) {
+      if (best_solutions[i] == NULL) {
+        o << "NULL";
+      } else {
+        o << best_solutions[i]->path_to_string();
+      }
+    } else {
+      o << "-1";
+    }
+
+    o << std::endl;
+  }
 
   o.close();
 
