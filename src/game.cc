@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <math.h>
+#include <set>
 
 Game::Game() :
   _w(0),
@@ -109,68 +110,68 @@ Game::move_cost(Game::Move m)
 }
 
 bool
-Game::is_game_won()
+Game::is_game_won() const
 {
   return _players[0](0) == _players[1](0) &&
          _players[0](1) == _players[1](1);
 }
 
 int
-Game::w()
+Game::w() const
 {
   return _w;
 }
 
 int
-Game::h()
+Game::h() const
 {
   return _h;
 }
 
 int
-Game::x1()
+Game::x1() const
 {
   return _players[0](0);
 }
 
 int
-Game::y1()
+Game::y1() const
 {
   return _players[0](1);
 }
 
 int
-Game::x2()
+Game::x2() const
 {
   return _players[1](0);
 }
 
 int
-Game::y2()
+Game::y2() const
 {
   return _players[1](1);
 }
 
 double
-Game::x1d()
+Game::x1d() const
 {
   return (double) _players[0](0);
 }
 
 double
-Game::y1d()
+Game::y1d() const
 {
   return (double) _players[0](1);
 }
 
 double
-Game::x2d()
+Game::x2d() const
 {
   return (double) _players[1](0);
 }
 
 double
-Game::y2d()
+Game::y2d() const
 {
   return (double) _players[1](1);
 }
@@ -332,6 +333,15 @@ Game::state_in_history(int x1, int y1, int x2, int y2)
   return false;
 }
 
+bool
+Game::operator ==(const Game &other) const
+{
+  return (x1() == other.x1() &&
+          y1() == other.y1() &&
+          x2() == other.x2() &&
+          y2() == other.y2());
+}
+
 GameComparison::GameComparison(const bool& revparam)
 {
   _reverse = revparam;
@@ -374,4 +384,33 @@ bool
 KnightComparison::operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const
 {
   return lhs->astar(Game::KNIGHT) > rhs->astar(Game::KNIGHT);
+}
+
+bool GameSetComparator::operator() (const boost::shared_ptr<Game>& lhs, const boost::shared_ptr<Game>& rhs) const
+{
+  if (lhs->x1() < rhs->x1()) {
+    return false;
+  } else if (lhs->x1() > rhs->x1()) {
+    return true;
+  }
+
+  if (lhs->y1() < rhs->y1()) {
+    return false;
+  } else if (lhs->y1() > rhs->y1()) {
+    return true;
+  }
+
+  if (lhs->x2() < rhs->x2()) {
+    return false;
+  } else if (lhs->x2() > rhs->x2()) {
+    return true;
+  }
+
+  if (lhs->y2() < rhs->y2()) {
+    return false;
+  } else if (lhs->y2() > rhs->y2()) {
+    return true;
+  }
+
+  return true;
 }

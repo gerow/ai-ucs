@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iomanip>
 #include <limits.h>
+#include <set>
 
 #include "ai-ucs/game.h"
 
@@ -17,12 +18,16 @@ solve(T q, boost::shared_ptr<Game> game, int &expanded, boost::shared_ptr<Game> 
 {
   expanded = 0;
 
+  std::set<boost::shared_ptr<Game>, GameSetComparator> explored;
+
   q.push(game);
 
   while (!q.empty()) {
     boost::shared_ptr<Game> cur = q.top();
     q.pop();
     expanded++;
+
+    explored.insert(cur);
 
     if (cur->is_game_won()) {
       *solution = *cur;
@@ -33,6 +38,10 @@ solve(T q, boost::shared_ptr<Game> game, int &expanded, boost::shared_ptr<Game> 
       boost::shared_ptr<Game> candidate = boost::shared_ptr<Game>(new Game(*cur));
       if (!candidate->move(moves[i])) {
         // if it isn't valid continue
+        continue;
+      }
+
+      if (explored.count(candidate) != 0) {
         continue;
       }
 
@@ -89,6 +98,7 @@ main(int argc, char** argv)
   }
 
   for (int i = 0; i < 3; i++) {
+    std::cout << "Solving set " << (i + 1) << std::endl;
     if (solve(eq, (*g)[i], e_expanded[i], e_solution[i])) {
       e_found.push_back(true);
     } else {

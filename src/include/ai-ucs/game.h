@@ -31,37 +31,37 @@ class Game {
     move_cost(Move m);
 
     bool
-    is_game_won();
+    is_game_won() const;
 
     int
-    w();
+    w() const;
 
     int
-    h();
+    h() const;
 
     int
-    x1();
+    x1() const;
 
     double
-    x1d();
+    x1d() const;
 
     int
-    y1();
+    y1() const;
 
     double
-    y1d();
+    y1d() const;
 
     int
-    x2();
+    x2() const;
 
     double
-    x2d();
+    x2d() const;
 
     int
-    y2();
+    y2() const;
 
     double
-    y2d();
+    y2d() const;
 
     //std::vector<boost::shared_ptr<player_vector> >
     //history();
@@ -92,6 +92,9 @@ class Game {
 
     double
     astar(Heuristic h);
+
+    bool
+    operator ==(const Game &other) const;
   private:
     int _w, _h;
 
@@ -140,6 +143,11 @@ public:
   KnightComparison(const bool& revparam=false);
 
   bool operator()(const boost::shared_ptr<Game> &lhs, const boost::shared_ptr<Game> &rhs) const;
+};
+
+class GameSetComparator {
+public:
+    bool operator() (const boost::shared_ptr<Game>& lhs, const boost::shared_ptr<Game>& rhs) const;
 };
 
 typedef std::priority_queue<boost::shared_ptr<Game>, std::vector<boost::shared_ptr<Game> >, GameComparison> game_priority_queue;

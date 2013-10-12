@@ -13,19 +13,6 @@ It will be looking in the current working directory (pwd) for the input file and
 
 There is plenty of stuff printed to stdout tracing the execution of the program.  For some difficult problems this can make the program run quite slowly.  It may help, in these cases, to redirect stdout to /dev/null
 
-You can also run the built in test suite with 'make test' or 'make check' if you're one of *those* kinds of people.
-
 == Questions Answered:
-1. It is easy to see that the branching factor for this problem is 4. We can also see that each branch gives us a new square with a branching factor of 4, although one of these loops back to the original square. Even so, let's stick with 4 for now.
+1.  First, knight seems completely awful.  It consistently gets worse results.  Canberra also gets worse results, while euclidian seems to always require less paths to be evaluated.  This seems to imply that euclidian would be a better heuristic, though, since it requires a square root it actually is pretty expensive computationally while canberra doesn't require such an operation.  Overall you would need to do some performance measurements to see which one _actually_ performs better with your data set, but in terms of reducing the number of paths explored euclidian seems to be the best.
 
-Since each new square introduces a branching factor of 4 that means that our state space will be 4**S where S is the number of squares.  On a size N square board this is N**2.  So the state space should be something on the order of 4**N**2
-
-2. There is NOT always a solution regardless of the starting positions.  This can be very easily proved by taking a 2 by 2 board and placing A in the bottom left and B in the bottom right like so:
-
------
-| | |
------
-|A|B|
------
-
-In this case if A tries to move up then B will have to move right, but that is not a legal move.  Additionally, if A tries to move right B will try to move down, which is also an illegal move.  Since A can also not move left or down because that would be illegal moves for it we can see that there is no solution for this starting position.
